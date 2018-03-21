@@ -1,14 +1,15 @@
-from re import search, findall  # add library
+ 
 import unittest
 import collections
+from re import search, findall  
 
 
 def hack_calculator(hack: str) -> int:  # basic version of hacker function
-    counter = 0  # declare counter
-    counter_dict={'a': 1, 'b': 1, 'c': 1}  # declare counter of repeating letters
+    counter = 0  
+    counter_dict={'a': 1, 'b': 1, 'c': 1} 
     letters={'a': 1, 'b': 2, 'c': 3}
     if search('[^(a-c)]', hack) is not None:  # searching if there is any no 'a,b,c' letter
-                                                #  in hacked string and return 0 if it is
+                                               
         return 0
     else:
         ffc = len(findall('baa', hack))  # find all 'baa' and 'ba' phrases and counter it
@@ -16,18 +17,18 @@ def hack_calculator(hack: str) -> int:  # basic version of hacker function
         sfc = sfc-ffc  # delete repeating phrases
         counter += 10*sfc+20*ffc  # add value to counter
             
-        for el in hack:  # looping through string and add value from letters
-            counter += letters[el]*counter_dict[el]  # add value to counter
-            counter_dict[el] += 1  # add +1 to repeating value
+        for el in hack:  
+            counter += letters[el]*counter_dict[el]  
+            counter_dict[el] += 1
     return counter
 
 
 def hack_calculator_v2(hack: str, words: dict, phrases: dict)-> int:  # better version of function
 
-    counter = 0  # counter of value
-    counter_dict = {el: 1 for el in words.keys()}  # declare counter of repeating letters
-    letters_str = ''.join(el for el in words.keys())  # all letters from words string
-    lst_of_phrase = {}  # dict of repeating phrases
+    counter = 0  
+    counter_dict = {el: 1 for el in words.keys()} 
+    letters_str = ''.join(el for el in words.keys()) 
+    lst_of_phrase = {}  
     sorted_phrases = collections.OrderedDict(sorted(phrases.items(), reverse=True))  # sort of phrases desc
     longest_phrase = max(len(x) for x in phrases.keys())  # longest phrase
     for el in hack:
@@ -39,7 +40,7 @@ def hack_calculator_v2(hack: str, words: dict, phrases: dict)-> int:  # better v
     for el,val in sorted_phrases.items():
         if len(el) == longest_phrase:
             find_phrase_counter = len(findall(el,hack))  # find all phrases starts from longest
-            counter += val*find_phrase_counter  # add its value to counter
+            counter += val*find_phrase_counter  
             lst_of_phrase[el] = find_phrase_counter  # add phrase and value how many times we found it ton"lst_of_phrases"
         else:
             find_phrase_counter_2 = len(findall(el, hack))  # find all phrases that's not the longgest ( they can overlap)
@@ -49,6 +50,8 @@ def hack_calculator_v2(hack: str, words: dict, phrases: dict)-> int:  # better v
             counter += val*find_phrase_counter_2 # add not overlap phrase value to counter
             lst_of_phrase[el] = find_phrase_counter_2 # add another phrases to lst_of_phrase that can overlap
     return(counter)
+
+
 if __name__ == "__main__":  # simple test's
     print(hack_calculator('baaca'))
     print(hack_calculator('babacaba'))

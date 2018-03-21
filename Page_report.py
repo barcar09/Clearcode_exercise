@@ -1,7 +1,8 @@
-import sys  # import libraries
+import sys 
 import re
 import collections
 import csv
+
 file = open(sys.argv[1], 'r').read()  # open file by console argument
 match_dict = {}  # empty dict for matching regex where <HTTP response code> will
                  # be key and count of frequency request showed
